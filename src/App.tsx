@@ -10,8 +10,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CorrectWords from './CorrectWords';
 
-// const pangram = pangrams[Math.floor(Math.random() * pangrams.length)];
-const pangram = 'grounds';
+const pangram = pangrams[Math.floor(Math.random() * pangrams.length)];
 console.log(pangram);
 let letters = shuffle(
   Array.from(
@@ -24,12 +23,6 @@ letters = letters.splice(0);
 function App() {
   const [selectedLetters, setLetters] = useState<string[]>([]);
   const [correctWords, setCorrectWords] = useState<string[]>([]);
-
-  // selectedLetters.length < 3 && selectedLetters.indexOf(requiredLetter) === -1
-  console.log('----');
-  console.log(selectedLetters.length < 3);
-  console.log(selectedLetters.indexOf(requiredLetter) === -1);
-  console.log(!(selectedLetters.length > 3 && selectedLetters.indexOf(requiredLetter) > 0));
 
   const checkWord = (word: string) => {
     console.log(word);
