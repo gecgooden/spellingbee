@@ -1,13 +1,8 @@
-const files = [
-    './english-words-10.json',
-    './english-words-20.json',
-    './english-words-35.json',
-    './english-words-40.json',
-    './english-words-50.json',
-    './english-words-55.json',
-    './english-words-60.json',
-    './english-words-70.json'
-];
+const arguments = process.argv.splice(2);
+
+const files = arguments.length !== 0
+    ? arguments.map(arg => `./english-words-${arg}.json`)
+    : ['./english-words-10.json', './english-words-20.json', './english-words-35.json', './english-words-40.json', './english-words-50.json', './english-words-55.json', './english-words-60.json', './english-words-70.json'];
 
 let words = [];
 
@@ -39,22 +34,10 @@ for(const pangram of pangrams) {
     }
 }
 
-// console.log(setCounts);
-
-// console.log(pangrams.length);
-
 const distinctPangrams = [];
 for(const pangram of pangrams) {
     if (setCounts[pangram.letters] === 1) distinctPangrams.push(pangram);
 }
 
 // console.log(distinctPangrams.length);
-// console.log(JSON.stringify(distinctPangrams.map(pangram => pangram.word)));
-
-const asciiWords = [];
-for(const word of words) {
-    const asciiLetters = word.split('').map(letter => letter.charCodeAt(0)).filter(charCode => charCode >= 97 && charCode <= 122);
-    if (asciiLetters.length === word.length) asciiWords.push(word);
-}
-
-console.log(JSON.stringify(asciiWords));
+console.log(JSON.stringify(distinctPangrams.map(pangram => pangram.word)));
