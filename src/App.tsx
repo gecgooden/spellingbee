@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import pangrams from './words/pangrams.json';
-import { HexGrid, Layout, Hexagon, Text, Pattern } from 'react-hexgrid';
+import { HexGrid, Layout, Hexagon, Text } from 'react-hexgrid';
 import shuffle from './shuffle';
 import words from './words/words.json';
 import Button from 'react-bootstrap/Button';
