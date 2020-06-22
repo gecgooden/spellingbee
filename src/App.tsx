@@ -10,8 +10,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CorrectWords from './CorrectWords';
 
+
 const pangram = pangrams[Math.floor(Math.random() * pangrams.length)];
-console.log(pangram);
 let letters = shuffle(
   Array.from(
     new Set<string>(pangram.split('')).values()
@@ -21,12 +21,15 @@ const requiredLetter = letters.pop();
 letters = letters.splice(0);
 
 function App() {
+
   const [selectedLetters, setLetters] = useState<string[]>([]);
   const [correctWords, setCorrectWords] = useState<string[]>([]);
 
   const checkWord = (word: string) => {
-    console.log(word);
-    if (word.indexOf(requiredLetter) >= 0 && words.indexOf(word.toLowerCase()) >= 0) {
+    const containsRequired = word.indexOf(requiredLetter) >= 0;
+    const validWord = words.indexOf(word.toLowerCase()) >= 0;
+    console.log({ containsRequired, validWord });
+    if (containsRequired && validWord) {
       setCorrectWords([...correctWords, word]);
     }
     setLetters([]);
@@ -36,12 +39,12 @@ function App() {
     <Container fluid>
       <Row>
         <Col>
-          <h1>{selectedLetters.length === 0 ? '' : selectedLetters.join('')}</h1>
+          <h1>{selectedLetters.join('')}</h1>
         </Col>
       </Row>
       <Row>
         <Col>
-          <HexGrid width={800} height={800} viewBox="-50 -50 100 100">
+          <HexGrid width="100%" height="600px" viewBox="-1 -30 1 60">
             <Layout size={{ x: 10, y: 10 }} flat={true} spacing={1.1} origin={{ x: 0, y: 0 }}>
               <Hexagon q={0} r={0} s={0} onClick={() => setLetters([...selectedLetters, requiredLetter])}>
                 <Text>{requiredLetter}</Text>
@@ -71,14 +74,14 @@ function App() {
         </Col>
       </Row>
       <Row>
-        <Col>
-          <Button onClick={() => setLetters([])}>Clear</Button>
+        <Col className="d-flex justify-content-center">
+          <Button onClick={() => setLetters([])} disabled={selectedLetters.length === 0}>Clear</Button>
         </Col>
-        <Col>
+        <Col className="d-flex justify-content-center">
           <Button onClick={() => {setLetters(selectedLetters.slice(0, -1));}} disabled={selectedLetters.length === 0}>Delete</Button>
         </Col>
-        <Col>
-          <Button onClick={() => checkWord(selectedLetters.join(''))} disabled={!(selectedLetters.length > 3 && selectedLetters.indexOf(requiredLetter) > 0)}>Submit</Button>
+        <Col className="d-flex justify-content-center">
+          <Button onClick={() => checkWord(selectedLetters.join(''))} disabled={!(selectedLetters.length > 3 && selectedLetters.indexOf(requiredLetter) >= 0)}>Submit</Button>
         </Col>
       </Row>
       <Row>
