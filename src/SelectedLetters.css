@@ -1,0 +1,10 @@
+.required {
+    color: cornflowerblue
+}
+
+.selected {
+    min-height: 2em;
+    font-size: 2em;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+}

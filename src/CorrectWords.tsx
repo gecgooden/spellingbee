@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Collapse from 'react-bootstrap/Collapse';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 export interface CorrectWordProps {
@@ -8,24 +7,25 @@ export interface CorrectWordProps {
 
 export default function (props: CorrectWordProps) {
     const [open, setOpen] = useState(false);
-    
-    const { words } = props;
-    const remainingWords = words.length === 0 ? [] : words.slice(1);
 
-    return (
-        <>
+    const { words } = props;
+    if (words.length === 0) {
+        return (
             <ListGroup>
-                {
-                    words.length === 0
-                    ? <ListGroup.Item>No words found yet</ListGroup.Item>
-                    : <ListGroup.Item onClick={() => setOpen(!open)}>{words[0]}</ListGroup.Item>
-                }
-                <Collapse in={open}>
-                    <div>
-                        {remainingWords.length > 0 && remainingWords.map(word => <ListGroup.Item key={word}>{word}</ListGroup.Item>)}
-                    </div>
-                </Collapse>
+                <ListGroup.Item>No words found yet</ListGroup.Item>
             </ListGroup>
-        </>
+        );
+    }
+    
+    const remainingWords = words.slice(1);
+    console.log({ words, open, remainingWords});
+    const remaining = remainingWords.map(word => <ListGroup.Item key={word}>{word}</ListGroup.Item>);
+    return (
+        <ListGroup>
+            <ListGroup.Item onClick={() => setOpen(!open)}>
+                {words[0]}
+            </ListGroup.Item>
+            {open && remaining}
+        </ListGroup>
     );
 }

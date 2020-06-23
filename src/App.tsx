@@ -9,6 +9,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CorrectWords from './CorrectWords';
+import SelectedLetters from './SelectedLetters';
 
 
 const pangram = pangrams[Math.floor(Math.random() * pangrams.length)];
@@ -20,7 +21,7 @@ let letters = shuffle(
 const requiredLetter = letters.pop();
 letters = letters.splice(0);
 
-function App() {
+export default function () {
 
   const [selectedLetters, setLetters] = useState<string[]>([]);
   const [correctWords, setCorrectWords] = useState<string[]>([]);
@@ -39,12 +40,12 @@ function App() {
     <Container fluid>
       <Row>
         <Col>
-          <h1>{selectedLetters.join('')}</h1>
+          <SelectedLetters selected={selectedLetters} required={requiredLetter}/>
         </Col>
       </Row>
       <Row>
         <Col>
-          <HexGrid width="100%" height="600px" viewBox="-1 -30 1 60">
+          <HexGrid width="100%" height="350px" viewBox="-1 -30 1 60">
             <Layout size={{ x: 10, y: 10 }} flat={true} spacing={1.1} origin={{ x: 0, y: 0 }}>
               <Hexagon q={0} r={0} s={0} onClick={() => setLetters([...selectedLetters, requiredLetter])}>
                 <Text>{requiredLetter}</Text>
@@ -84,7 +85,7 @@ function App() {
           <Button onClick={() => checkWord(selectedLetters.join(''))} disabled={!(selectedLetters.length > 3 && selectedLetters.indexOf(requiredLetter) >= 0)}>Submit</Button>
         </Col>
       </Row>
-      <Row>
+      <Row className="pt-4">
         <Col>
           <CorrectWords words={correctWords} />
         </Col>
@@ -92,5 +93,3 @@ function App() {
     </Container>
   );
 }
-
-export default App;
