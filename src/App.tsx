@@ -31,7 +31,7 @@ export default function () {
     const validWord = words.indexOf(word.toLowerCase()) >= 0;
     console.log({ containsRequired, validWord });
     if (containsRequired && validWord) {
-      setCorrectWords([...correctWords, word]);
+      setCorrectWords([word, ...correctWords]);
     }
     setLetters([]);
   }
